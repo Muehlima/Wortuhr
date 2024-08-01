@@ -33,7 +33,7 @@ void setup () {
     while (true);
   }
   // ***** Set the time: *****
-  //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));  // Zeit vom Compiler
+  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));  // Zeit vom Compiler
   //rtc.adjust(DateTime(2022, 11, 21, 13, 0, 0)); // J, M, T, Std, Min, Sek
 }
 

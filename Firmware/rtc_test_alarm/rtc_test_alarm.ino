@@ -23,7 +23,7 @@ SQW         D4/2
 
 #include "RTClib.h"
 RTC_DS3231 rtc;
-const uint8_t alarmPin = D4;
+const uint8_t alarmPin = D3;
 
 void IRAM_ATTR onAlarmIntPin() {
   // Diese Funktion wird mit dem SQW Pin bei einem Alarm aufgerufen

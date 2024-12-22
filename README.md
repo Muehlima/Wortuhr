@@ -10,7 +10,7 @@ This project is a "word clock" which shows the time in words by using a microcon
 
 ## Installing / Getting started
 
-1. **Clone the Repository**:
+1. **Clone the Repository**
     ```sh
     git clone https://github.com/muehlima/wortuhr.git
     cd wortuhr
@@ -23,6 +23,13 @@ This project is a "word clock" which shows the time in words by using a microcon
     - Adafruit NeoPixel (https://github.com/adafruit/Adafruit_NeoPixel)
     - Adafruit RTClib (https://github.com/adafruit/RTClib)
     - Adafruit BusIO (https://github.com/adafruit/Adafruit_BusIO)
+
+3. **Add Microcontroller to Arduino IDE**
+    - Add additional Boards under `File=>Preferences=>Additional Boards Manager` and add the following URL:
+        ```
+        http://arduino.esp8266.com/stable/package_esp8266com_index.json
+        ```
+    - Next you can go to `Tools=>Boards=>Boards Manager` and under `ESP8266` you can chose `WeMos D1 R2 & mini` or what microcontroller you may have
 
 
 ## Features
@@ -51,4 +58,4 @@ TODO
 
 Michael Mühlemann
 
-Bern, 20.07.2024
+Bern, 21.12.2024

@@ -11,7 +11,7 @@
 #define LED_PIN    D5
 
 // How many NeoPixels are attached to the Arduino?
-#define LED_COUNT  30
+#define LED_COUNT  110
 
 // NeoPixel brightness, 0 (min) to 255 (max)
 #define BRIGHTNESS 50 // Set BRIGHTNESS to about 1/5 (max = 255)

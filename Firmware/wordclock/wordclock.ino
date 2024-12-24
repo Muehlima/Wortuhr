@@ -38,11 +38,11 @@ const uint8_t VIURTU_ARRAY[] = {108, 91, 88, 71, 68, 51};
 const uint8_t ZWAENZG_ARRAY[] = {107, 92, 87, 72, 67, 52};
 const uint8_t AB_ARRAY[] = {106, 93};
 const uint8_t VOR_ARRAY[] = {27, 12, 7};
-const uint8_t HAUBI_ARRAY[] = {86, 73, 66, 53, 46, 33};
+const uint8_t HAUBI_ARRAY[] = {73, 66, 53, 46, 33};
 const uint8_t EIS_ARRAY[] = {105, 94, 85};
 const uint8_t ZWOEI_ARRAY[] = {74, 65, 54, 45};
 const uint8_t DRUE_ARRAY[] = {25, 14, 5};
-const uint8_t VIERI_ARRAY[] = {104, 95, 84, 74, 64};
+const uint8_t VIERI_ARRAY[] = {104, 95, 84, 75, 64};
 const uint8_t FUEFI_ARRAY[] = {55, 44, 35, 24};
 const uint8_t SAECHSI_ARRAY[] = {103, 96, 83, 76, 63, 56};
 const uint8_t SIEBNI_ARRAY[] = {43, 36, 23, 16, 3};
@@ -50,7 +50,7 @@ const uint8_t ACHTI_ARRAY[] = {102, 97, 82, 77, 62};
 const uint8_t NUENI_ARRAY[] = {57, 42, 37, 22};
 const uint8_t ZAENI_ARRAY[] = {101, 98, 81, 78};
 const uint8_t EUFI_ARRAY[] = {38, 21, 18, 1};
-const uint8_t ZWOEUFI_ARRAY[] = {100, 99, 80, 79, 60, 59};
+const uint8_t ZWOEUFI_ARRAY[] = {58, 41, 38, 21, 18, 1};
 
 const Word ESISCH = {sizeof(ESISCH_ARRAY) / sizeof(ESISCH_ARRAY[0]), ESISCH_ARRAY};
 const Word FUEF = {sizeof(FUEF_ARRAY) / sizeof(FUEF_ARRAY[0]), FUEF_ARRAY};
@@ -101,11 +101,22 @@ void loop() {
 
 
   // Build Time Words for current time
-  uint8_t minute = 30;  // Test values
-  uint8_t hour = 10;    // Test values
+  uint8_t minute = 0;  // Test values
+  uint8_t hour = 0;    // Test values
 
-  build_time_words(10, 23, timeWords, &wordCount);
-  show_time(timeWords, wordCount);
+  for (minute = 0; minute < 60; minute+=5) {
+    build_time_words(hour, minute, timeWords, &wordCount);
+    show_time(timeWords, wordCount);
+    delay(5000);
+  }
+  minute = 0;
+  for (hour = 0; hour < 12; hour++) {
+    build_time_words(hour, minute, timeWords, &wordCount);
+    show_time(timeWords, wordCount);
+    delay(5000);
+  }
+  // build_time_words(hour, minute, timeWords, &wordCount);
+  // show_time(timeWords, wordCount);
  
 }
 
@@ -169,7 +180,7 @@ void build_time_words(int hour, int minute, const Word *result[], size_t *wordCo
   }
 
   // Stunden hinzufügen
-  if (minute >= 25): // Ab 25 Minuten wird die nächste Stunde angezeigt
+  if (minute >= 25) // Ab 25 Minuten wird die nächste Stunde angezeigt
   {
     hour++;
   }
@@ -216,11 +227,16 @@ void build_time_words(int hour, int minute, const Word *result[], size_t *wordCo
 }
 
 void show_time(const Word *words[], size_t wordCount) {
-    for (size_t i = 0; i < wordCount; i++) {
-        const Word* word = words[i];
-        for (size_t j = 0; j < word->size; j++) {
-            strip.setPixelColor(word->word[j], strip.Color(0, 0, 0, 255)); // True white (not RGB white)
-        } 
-    }
-    strip.show();
+  // Initialize all LEDs to off
+  strip.clear();
+  strip.show();
+
+  // Set LEDs for each word
+  for (size_t i = 0; i < wordCount; i++) {
+      const Word* word = words[i];
+      for (size_t j = 0; j < word->size; j++) {
+          strip.setPixelColor(word->word[j], strip.Color(0, 0, 0, 255)); // True white (not RGB white)
+      } 
+  }
+  strip.show();
 }

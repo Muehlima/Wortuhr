@@ -2,6 +2,8 @@
 #ifdef __AVR__
  #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
 #endif
+#include "words.h"
+
 
 // Which pin on the Arduino is connected to the NeoPixels?
 // On a Trinket or Gemma we suggest changing this to 1:
@@ -23,66 +25,6 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
-
-// Struct for LED Patterns
-typedef struct {
-    size_t size;         // Anzahl der Elemente
-    const uint8_t* word; // Pointer auf ein statisches Array
-} Word;
-
-// LED Patterns for the different Words
-const uint8_t ESISCH_ARRAY[] = {90, 109, 70, 69, 50, 49};
-const uint8_t FUEF_ARRAY[] = {29, 10, 9};
-const uint8_t ZAEAE_ARRAY[] = {28, 11, 8};
-const uint8_t VIURTU_ARRAY[] = {108, 91, 88, 71, 68, 51};
-const uint8_t ZWAENZG_ARRAY[] = {107, 92, 87, 72, 67, 52};
-const uint8_t AB_ARRAY[] = {106, 93};
-const uint8_t VOR_ARRAY[] = {27, 12, 7};
-const uint8_t HAUBI_ARRAY[] = {73, 66, 53, 46, 33};
-const uint8_t EIS_ARRAY[] = {105, 94, 85};
-const uint8_t ZWOEI_ARRAY[] = {74, 65, 54, 45};
-const uint8_t DRUE_ARRAY[] = {25, 14, 5};
-const uint8_t VIERI_ARRAY[] = {104, 95, 84, 75, 64};
-const uint8_t FUEFI_ARRAY[] = {55, 44, 35, 24};
-const uint8_t SAECHSI_ARRAY[] = {103, 96, 83, 76, 63, 56};
-const uint8_t SIEBNI_ARRAY[] = {43, 36, 23, 16, 3};
-const uint8_t ACHTI_ARRAY[] = {102, 97, 82, 77, 62};
-const uint8_t NUENI_ARRAY[] = {57, 42, 37, 22};
-const uint8_t ZAENI_ARRAY[] = {101, 98, 81, 78};
-const uint8_t EUFI_ARRAY[] = {38, 21, 18, 1};
-const uint8_t ZWOEUFI_ARRAY[] = {58, 41, 38, 21, 18, 1};
-
-const Word ESISCH = {sizeof(ESISCH_ARRAY) / sizeof(ESISCH_ARRAY[0]), ESISCH_ARRAY};
-const Word FUEF = {sizeof(FUEF_ARRAY) / sizeof(FUEF_ARRAY[0]), FUEF_ARRAY};
-const Word ZAEAE = {sizeof(ZAEAE_ARRAY) / sizeof(ZAEAE_ARRAY[0]), ZAEAE_ARRAY};
-const Word VIURTU = {sizeof(VIURTU_ARRAY) / sizeof(VIURTU_ARRAY[0]), VIURTU_ARRAY};
-const Word ZWAENZG = {sizeof(ZWAENZG_ARRAY) / sizeof(ZWAENZG_ARRAY[0]), ZWAENZG_ARRAY};
-const Word AB = {sizeof(AB_ARRAY) / sizeof(AB_ARRAY[0]), AB_ARRAY};
-const Word VOR = {sizeof(VOR_ARRAY) / sizeof(VOR_ARRAY[0]), VOR_ARRAY};
-const Word HAUBI = {sizeof(HAUBI_ARRAY) / sizeof(HAUBI_ARRAY[0]), HAUBI_ARRAY};
-const Word EIS = {sizeof(EIS_ARRAY) / sizeof(EIS_ARRAY[0]), EIS_ARRAY};
-const Word ZWOEI = {sizeof(ZWOEI_ARRAY) / sizeof(ZWOEI_ARRAY[0]), ZWOEI_ARRAY};
-const Word DRUE = {sizeof(DRUE_ARRAY) / sizeof(DRUE_ARRAY[0]), DRUE_ARRAY};
-const Word VIERI = {sizeof(VIERI_ARRAY) / sizeof(VIERI_ARRAY[0]), VIERI_ARRAY};
-const Word FUEFI = {sizeof(FUEFI_ARRAY) / sizeof(FUEFI_ARRAY[0]), FUEFI_ARRAY};
-const Word SAECHSI = {sizeof(SAECHSI_ARRAY) / sizeof(SAECHSI_ARRAY[0]), SAECHSI_ARRAY};
-const Word SIEBNI = {sizeof(SIEBNI_ARRAY) / sizeof(SIEBNI_ARRAY[0]), SIEBNI_ARRAY};
-const Word ACHTI = {sizeof(ACHTI_ARRAY) / sizeof(ACHTI_ARRAY[0]), ACHTI_ARRAY};
-const Word NUENI = {sizeof(NUENI_ARRAY) / sizeof(NUENI_ARRAY[0]), NUENI_ARRAY};
-const Word ZAENI = {sizeof(ZAENI_ARRAY) / sizeof(ZAENI_ARRAY[0]), ZAENI_ARRAY};
-const Word EUFI = {sizeof(EUFI_ARRAY) / sizeof(EUFI_ARRAY[0]), EUFI_ARRAY};
-const Word ZWOEUFI = {sizeof(ZWOEUFI_ARRAY) / sizeof(ZWOEUFI_ARRAY[0]), ZWOEUFI_ARRAY};
-
-// LED Patterns for Minutes in Corners
-const uint8_t MIN_ONE_ARRAY[] = {111};
-const uint8_t MIN_TWO_ARRAY[] = {111, 110};
-const uint8_t MIN_THREE_ARRAY[] = {111, 110, 112};
-const uint8_t MIN_FOUR_ARRAY[] = {111, 110, 112, 113};
-
-const Word MIN_ONE = {sizeof(MIN_ONE_ARRAY) / sizeof(MIN_ONE_ARRAY[0]), MIN_ONE_ARRAY};
-const Word MIN_TWO = {sizeof(MIN_TWO_ARRAY) / sizeof(MIN_TWO_ARRAY[0]), MIN_TWO_ARRAY};
-const Word MIN_THREE = {sizeof(MIN_THREE_ARRAY) / sizeof(MIN_THREE_ARRAY[0]), MIN_THREE_ARRAY};
-const Word MIN_FOUR = {sizeof(MIN_FOUR_ARRAY) / sizeof(MIN_FOUR_ARRAY[0]), MIN_FOUR_ARRAY};
 
 
 void setup() {

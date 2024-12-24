@@ -59,24 +59,6 @@ void loop() {
     // TODO: Add Alarm with RTC and Interrupt
     delay(10000); // Update every 10 seconds
   }
-
-  // Build Time Words for current time
-  // uint8_t minute = 0;  // Test values
-  // uint8_t hour = 0;    // Test values
-
-  // for (minute = 0; minute < 60; minute+=5) {
-  //   build_time_words(hour, minute, timeWords, &wordCount);
-  //   show_time(timeWords, wordCount);
-  //   delay(5000);
-  // }
-  // minute = 0;
-  // for (hour = 0; hour < 12; hour++) {
-  //   build_time_words(hour, minute, timeWords, &wordCount);
-  //   show_time(timeWords, wordCount);
-  //   delay(5000);
-  // }
-  // build_time_words(hour, minute, timeWords, &wordCount);
-  // show_time(timeWords, wordCount);
  
 }
 

@@ -2,6 +2,7 @@
 #ifdef __AVR__
  #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
 #endif
+#include "RTClib.h"
 #include "words.h"
 
 
@@ -26,10 +27,17 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
 
+// RTC
+RTC_DS3231 rtc;
+
 
 void setup() {
   // Setup LEDs
   Serial.begin(115200);
+  if (! rtc.begin()) {
+    Serial.println("Finde keine RTC");
+    while (true);
+  }
   strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
   strip.show();            // Turn OFF all pixels ASAP
   strip.setBrightness(BRIGHTNESS);
@@ -41,22 +49,32 @@ void loop() {
   const Word* timeWords[10]; // Platz für 10 Wörter
   size_t wordCount;
 
+  bool running = true;
+
+  while (running) {
+    DateTime now = rtc.now();
+    build_time_words(now.hour(), now.minute(), timeWords, &wordCount);
+    show_time(timeWords, wordCount);
+    
+    // TODO: Add Alarm with RTC and Interrupt
+    delay(10000); // Update every 10 seconds
+  }
 
   // Build Time Words for current time
-  uint8_t minute = 0;  // Test values
-  uint8_t hour = 0;    // Test values
+  // uint8_t minute = 0;  // Test values
+  // uint8_t hour = 0;    // Test values
 
-  for (minute = 0; minute < 60; minute+=5) {
-    build_time_words(hour, minute, timeWords, &wordCount);
-    show_time(timeWords, wordCount);
-    delay(5000);
-  }
-  minute = 0;
-  for (hour = 0; hour < 12; hour++) {
-    build_time_words(hour, minute, timeWords, &wordCount);
-    show_time(timeWords, wordCount);
-    delay(5000);
-  }
+  // for (minute = 0; minute < 60; minute+=5) {
+  //   build_time_words(hour, minute, timeWords, &wordCount);
+  //   show_time(timeWords, wordCount);
+  //   delay(5000);
+  // }
+  // minute = 0;
+  // for (hour = 0; hour < 12; hour++) {
+  //   build_time_words(hour, minute, timeWords, &wordCount);
+  //   show_time(timeWords, wordCount);
+  //   delay(5000);
+  // }
   // build_time_words(hour, minute, timeWords, &wordCount);
   // show_time(timeWords, wordCount);
  

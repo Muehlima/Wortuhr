@@ -137,16 +137,69 @@ void loop() {
   //Serial.println(Test);
   //Serial.println(Test2);
 
-  int currentHour = 10; // Beispielwerte
-  int currentMinute = 23;
+  // int currentHour = 10; // Beispielwerte
+  // int currentMinute = 23;
 
-  Word timeArray = build_time_struct(currentHour, currentMinute);
+  // Word timeArray = build_time_struct(currentHour, currentMinute);
 
-  // Zeige die Zeit an
-  showTime(strip.Color(0, 0, 0, 255), timeArray.word, timeArray.size); // True white (not RGB white)
+  // // Zeige die Zeit an
+  // showTime(strip.Color(0, 0, 0, 255), timeArray.word, timeArray.size); // True white (not RGB white)
 
-  delay(10000); // Wartezeit (1 Sekunde)
+  // delay(10000); // Wartezeit (1 Sekunde)
+
+  // NEW APPROACH
+  const Word* timeWords[10]; // Platz für 10 Wörter
+  size_t wordCount;
+
+  build_time_words(10, 23, timeWords, &wordCount);
+
+  uint8_t finalArray[50]; // Platz für bis zu 50 LEDs (anpassen!)
+  size_t totalLEDs = combine_words(timeWords, wordCount, finalArray);
+
+// finalArray enthält jetzt alle LED-IDs
+
+
 }
+
+void build_time_words(int hour, int minute, const Word* result[], size_t* wordCount) {
+    *wordCount = 0; // Zähler zurücksetzen
+    
+    // Beispiel für Zeitkombinationen
+    result[(*wordCount)++] = &ESISCH; // "Es isch"
+
+    // Minuten abhängig von der Zeit hinzufügen
+    switch (minute / 5) {
+        case 1:
+            result[(*wordCount)++] = &FUEF; // "Füf"
+            result[(*wordCount)++] = &AB;   // "ab"
+            break;
+        case 2:
+            result[(*wordCount)++] = &ZAEAE; // "Zäae"
+            result[(*wordCount)++] = &AB;    // "ab"
+            break;
+        // Weitere Fälle ...
+    }
+
+    // Stunden hinzufügen
+    switch (hour % 12) {
+        case 1: result[(*wordCount)++] = &EIS; break;  // "Eis"
+        case 2: result[(*wordCount)++] = &ZWOEI; break; // "Zwoei"
+        // Weitere Stunden ...
+    }
+}
+
+
+size_t combine_words(const Word* words[], size_t wordCount, uint8_t* outputArray) {
+    size_t totalSize = 0;
+    for (size_t i = 0; i < wordCount; i++) {
+        const Word* word = words[i];
+        for (size_t j = 0; j < word->size; j++) {
+            outputArray[totalSize++] = word->word[j];
+        }
+    }
+    return totalSize; // Gesamte Anzahl der LEDs
+}
+
 
 Word build_time_struct(int hour, int minute)
 {

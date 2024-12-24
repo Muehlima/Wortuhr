@@ -161,33 +161,106 @@ void loop() {
 
 }
 
-void build_time_words(int hour, int minute, const Word* result[], size_t* wordCount) {
-    *wordCount = 0; // Zähler zurücksetzen
-    
-    // Beispiel für Zeitkombinationen
-    result[(*wordCount)++] = &ESISCH; // "Es isch"
+void build_time_words(int hour, int minute, const Word *result[], size_t *wordCount)
+{
+  *wordCount = 0; // Zähler zurücksetzen
 
-    // Minuten abhängig von der Zeit hinzufügen
-    switch (minute / 5) {
-        case 1:
-            result[(*wordCount)++] = &FUEF; // "Füf"
-            result[(*wordCount)++] = &AB;   // "ab"
-            break;
-        case 2:
-            result[(*wordCount)++] = &ZAEAE; // "Zäae"
-            result[(*wordCount)++] = &AB;    // "ab"
-            break;
-        // Weitere Fälle ...
-    }
+  // Beispiel für Zeitkombinationen
+  result[(*wordCount)++] = &ESISCH; // "Es isch"
 
-    // Stunden hinzufügen
-    switch (hour % 12) {
-        case 1: result[(*wordCount)++] = &EIS; break;  // "Eis"
-        case 2: result[(*wordCount)++] = &ZWOEI; break; // "Zwoei"
-        // Weitere Stunden ...
-    }
+  // Minuten abhängig von der Zeit hinzufügen
+  switch (minute / 5)
+  {
+  case 1:
+    result[(*wordCount)++] = &FUEF; // "Füf"
+    result[(*wordCount)++] = &AB;   // "ab"
+    break;
+  case 2:
+    result[(*wordCount)++] = &ZAEAE; // "Zäae"
+    result[(*wordCount)++] = &AB;    // "ab"
+    break;
+  case 3:
+    result[(*wordCount)++] = &VIURTU; // "Viertu"
+    result[(*wordCount)++] = &AB;     // "ab"
+    break;
+  case 4:
+    result[(*wordCount)++] = &ZWAENZG; // "Zwänzg"
+    result[(*wordCount)++] = &AB;      // "ab"
+    break;
+  case 5:
+    result[(*wordCount)++] = &FUEF; // "Füf"
+    result[(*wordCount)++] = &VOR;  // "vor"
+    result[(*wordCount)++] = &HAUBI; // "halb"
+    break;
+  case 6:
+    result[(*wordCount)++] = &HAUBI; // "halb"
+    break;
+  case 7:
+    result[(*wordCount)++] = &FUEF; // "Füf"
+    result[(*wordCount)++] = &AB;   // "ab"
+    result[(*wordCount)++] = &HAUBI; // "halb"
+    break;
+  case 8:
+    result[(*wordCount)++] = &ZWAENZG; // "Zwänzg"
+    result[(*wordCount)++] = &VOR;     // "vor"
+    break;
+  case 9:
+    result[(*wordCount)++] = &VIURTU; // "Viertu"
+    result[(*wordCount)++] = &VOR;    // "vor"
+    break;
+  case 10:
+    result[(*wordCount)++] = &ZAEAE; // "Zäae"
+    result[(*wordCount)++] = &VOR;   // "vor"
+    break;
+  case 11:
+    result[(*wordCount)++] = &FUEF; // "Füf"
+    result[(*wordCount)++] = &VOR;  // "vor"
+    break;
+  default:
+    break;
+  }
+
+  // Stunden hinzufügen
+  switch (hour % 12)
+  {
+  case 0:
+    result[(*wordCount)++] = &ZWOEUFI;
+    break; // "Zwoeufi"  
+  case 1:
+    result[(*wordCount)++] = &EIS;
+    break; // "Eis"
+  case 2:
+    result[(*wordCount)++] = &ZWOEI;
+    break; // "Zwoei"
+  case 3:
+    result[(*wordCount)++] = &DRUE;
+    break; // "Drü"
+  case 4:
+    result[(*wordCount)++] = &VIERI;
+    break; // "Vieri"
+  case 5:
+    result[(*wordCount)++] = &FUEFI;
+    break; // "Füfi"
+  case 6:
+    result[(*wordCount)++] = &SAECHSI;
+    break; // "Sächsi"
+  case 7:
+    result[(*wordCount)++] = &SIEBNI;
+    break; // "Siebni"
+  case 8:
+    result[(*wordCount)++] = &ACHTI;
+    break; // "Achti"
+  case 9:
+    result[(*wordCount)++] = &NUENI;
+    break; // "Nueni"
+  case 10:
+    result[(*wordCount)++] = &ZAENI;
+    break; // "Zaeni"
+  case 11:
+    result[(*wordCount)++] = &EUFI;
+    break; // "Eufi"
+  }
 }
-
 
 size_t combine_words(const Word* words[], size_t wordCount, uint8_t* outputArray) {
     size_t totalSize = 0;

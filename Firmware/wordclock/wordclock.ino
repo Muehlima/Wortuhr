@@ -37,7 +37,7 @@ void setup() {
 }
 
 void loop() {
-  // NEW APPROACH
+  // Initialize variables for time words
   const Word* timeWords[10]; // Platz für 10 Wörter
   size_t wordCount;
 
@@ -66,10 +66,10 @@ void build_time_words(int hour, int minute, const Word *result[], size_t *wordCo
 {
   *wordCount = 0; // Zähler zurücksetzen
 
-  // Beispiel für Zeitkombinationen
+  // Always displayed "Es isch"
   result[(*wordCount)++] = &ESISCH; // "Es isch"
 
-  // Minuten abhängig von der Zeit hinzufügen
+  // Add minutes to the result
   switch (minute / 5)
   {
   case 1:
@@ -121,8 +121,8 @@ void build_time_words(int hour, int minute, const Word *result[], size_t *wordCo
     break;
   }
 
-  // Stunden hinzufügen
-  if (minute >= 25) // Ab 25 Minuten wird die nächste Stunde angezeigt
+  // Add hour to the result
+  if (minute >= 25) // From 25 minutes on, the next hour will be displayed (e.g. füf vor haubi eis)
   {
     hour++;
   }

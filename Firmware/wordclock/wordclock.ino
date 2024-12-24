@@ -56,8 +56,10 @@ void loop() {
     build_time_words(now.hour(), now.minute(), timeWords, &wordCount);
     show_time(timeWords, wordCount);
     
-    // TODO: Add Alarm with RTC and Interrupt
+    // TODO: Put controller to sleep and add Alarm with RTC Interrupt
     delay(10000); // Update every 10 seconds
+
+    // TODO: Add buttons to change time
   }
  
 }
@@ -68,6 +70,8 @@ void build_time_words(int hour, int minute, const Word *result[], size_t *wordCo
 
   // Always displayed "Es isch"
   result[(*wordCount)++] = &ESISCH; // "Es isch"
+
+  // TODO: Implement the minutes in corners (Modulo 5)
 
   // Add minutes to the result
   switch (minute / 5)

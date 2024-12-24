@@ -101,7 +101,7 @@ void loop() {
 
 
   // Build Time Words for current time
-  uint8_t minute = 23;  // Test values
+  uint8_t minute = 30;  // Test values
   uint8_t hour = 10;    // Test values
 
   build_time_words(10, 23, timeWords, &wordCount);
@@ -169,6 +169,11 @@ void build_time_words(int hour, int minute, const Word *result[], size_t *wordCo
   }
 
   // Stunden hinzufügen
+  if (minute >= 25): // Ab 25 Minuten wird die nächste Stunde angezeigt
+  {
+    hour++;
+  }
+
   switch (hour % 12)
   {
   case 0:

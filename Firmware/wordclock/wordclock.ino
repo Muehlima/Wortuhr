@@ -68,6 +68,8 @@ bool wifi_on = true;
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "ch.pool.ntp.org", 3600, 60000);
 
+bool wifi_sleeping = false;
+
 /*
 -----------------------------------------------------------------------------------------
 ----------------------- SETUP -----------------------------------------------------------
@@ -90,10 +92,10 @@ void setup() {
   // --- SETUP RTC ---
   rtc.disable32K(); // we don't need the 32K Pin, so disable it
   //Alarm register löschen und beide Alarme vorerst ausschalten  
-  rtc.disableAlarm(1);
-  rtc.disableAlarm(2);
   rtc.clearAlarm(1);
   rtc.clearAlarm(2);  
+  rtc.disableAlarm(1);
+  rtc.disableAlarm(2);
   rtc.writeSqwPinMode(DS3231_OFF);
   Serial.println("Cleared Alarms");
 
@@ -121,19 +123,14 @@ void setup() {
     update_rtc_time();
   }
 
-  // Disable built-in LED
-  // pinMode(LED_BUILTIN, OUTPUT);
-  // digitalWrite(LED_BUILTIN, LOW);
   // Light sleep mode
   pinMode(LIGHT_WAKE_PIN, INPUT_PULLUP);
-  //gpio_init(); // Initilise GPIO pins
-
 
   // Alarm 1 und 2 setzen
   // löst jede Minute einen Alarm aus (55 Sekunden)
-  rtc.setAlarm1(DateTime(0, 0, 0, 0, 0, 55), DS3231_A1_Second); 
+  rtc.setAlarm1(DateTime(0, 0, 0, 0, 19, 30), DS3231_A1_Minute); 
   // löst jede Minute aus
-  rtc.setAlarm2(rtc.now(), DS3231_A2_PerMinute);  
+  rtc.setAlarm2(DateTime(0, 0, 0, 0, 0, 0), DS3231_A2_PerMinute);  
 
   Serial.println("Setup complete");
 }
@@ -151,20 +148,30 @@ void loop() {
   bool running = true;
 
   while (running) {
-
-    DateTime now = rtc.now();
-    build_time_words(now.hour(), now.minute(), timeWords, &wordCount);
-    show_time(timeWords, wordCount);
-    
-    // Check if the alarm for new Time has been triggered
+    // Check if the alarm to update the rtc time
     if(rtc.alarmFired(1)) {
       rtc.clearAlarm(1);
       Serial.println("Alarm 1 ausgelöst über alarmFired Register");
       Serial.println();
+      update_rtc_time();
     }
 
+    // Check if the alarm for new Time has been triggered (Every Minute)
+    if(rtc.alarmFired(2)) {
+      rtc.clearAlarm(2);
+      Serial.println("Alarm 2 ausgelöst über alarmFired Register");
+      Serial.println();
+
+      // Build the words for the current time
+      DateTime now = rtc.now();
+      build_time_words(now.hour(), now.minute(), timeWords, &wordCount);
+      show_time(timeWords, wordCount);
+    }
+
+
+    
     light_sleep();
-    //delay(1000); // 1 Sekunde warten
+
     // TODO: Add buttons to change time
 
   }
@@ -318,6 +325,6 @@ void light_sleep() {
   wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);
   wifi_fpm_open();
   wifi_fpm_do_sleep(FPM_SLEEP_MAX_TIME);
-  delay(5000);
+  delay(1000);
   Serial.println("Exit light sleep mode");
 }

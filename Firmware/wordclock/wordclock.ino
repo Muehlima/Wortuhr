@@ -22,7 +22,7 @@ IDE:      Arduino IDE 2.0.3
 
 // NeoPixel
 // Which pin on the Arduino is connected to the NeoPixels?
-#define LED_PIN     D5
+#define LED_PIN     D6
 
 // How many NeoPixels are attached to the Arduino?
 #define LED_COUNT   110  // Max Value 255 (uint8_t)
@@ -122,12 +122,11 @@ void setup() {
   }
 
   // Disable built-in LED
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
-
+  // pinMode(LED_BUILTIN, OUTPUT);
+  // digitalWrite(LED_BUILTIN, LOW);
   // Light sleep mode
   pinMode(LIGHT_WAKE_PIN, INPUT_PULLUP);
-  gpio_init(); // Initilise GPIO pins
+  //gpio_init(); // Initilise GPIO pins
 
 
   // Alarm 1 und 2 setzen
@@ -164,8 +163,8 @@ void loop() {
       Serial.println();
     }
 
-    // light_sleep();
-    delay(1000); // 1 Sekunde warten
+    light_sleep();
+    //delay(1000); // 1 Sekunde warten
     // TODO: Add buttons to change time
 
   }
@@ -314,11 +313,11 @@ void update_rtc_time() {
 void light_sleep() {
   Serial.println("Enter light sleep mode");
   Serial.flush();
-  gpio_pin_wakeup_enable(GPIO_ID_PIN(LIGHT_WAKE_PIN), GPIO_PIN_INTR_LOLEVEL);
+  gpio_pin_wakeup_enable(LIGHT_WAKE_PIN, GPIO_PIN_INTR_LOLEVEL);
   wifi_set_opmode(NULL_MODE);
   wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);
   wifi_fpm_open();
   wifi_fpm_do_sleep(FPM_SLEEP_MAX_TIME);
-  delay(100);
+  delay(5000);
   Serial.println("Exit light sleep mode");
 }

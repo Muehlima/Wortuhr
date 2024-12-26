@@ -1,4 +1,5 @@
 // secrets_example.h
+// Change name to secrets.h
 #ifndef SECRETS_H
 #define SECRETS_H
 

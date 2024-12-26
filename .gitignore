@@ -33,4 +33,4 @@
 
 # vscode
 .vscode/
-wifi_sleep/secrets.h
+*secrets.h

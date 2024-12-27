@@ -164,6 +164,8 @@ void loop() {
 
       // Build the words for the current time
       DateTime now = rtc.now();
+      char buf1[] = "DD.MMM.YYYY-hh:mm:ss";
+      Serial.println(now.toString(buf1));
       build_time_words(now.hour(), now.minute(), timeWords, &wordCount);
       show_time(timeWords, wordCount);
     }

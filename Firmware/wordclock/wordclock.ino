@@ -66,7 +66,7 @@ bool wifi_on = true;
 // additionally you can specify the update interval (in milliseconds).
 // NTPClient timeClient(ntpUDP, "europe.pool.ntp.org", 3600, 60000);
 WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP, "ch.pool.ntp.org", 3600, 60000);
+NTPClient timeClient(ntpUDP, "ch.pool.ntp.org", 3600);
 
 bool wifi_sleeping = false;
 
@@ -103,22 +103,7 @@ void setup() {
   if (wifi_on) {
     
     Serial.println("WiFi Setup");
-    // Connecting to WiFi...
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-    Serial.print("Connecting to ");
-    Serial.print(WIFI_SSID);
-    // Loop continuously while WiFi is not connected
-    while (WiFi.status() != WL_CONNECTED)
-    {
-      delay(100);
-      Serial.print(".");
-    }
-
-    // Connected to WiFi
-    Serial.println();
-    Serial.print("Connected! IP address: ");
-    Serial.println(WiFi.localIP());
-
+    connect_wifi();
     timeClient.begin();
     update_rtc_time();
   }
@@ -128,7 +113,7 @@ void setup() {
 
   // Alarm 1 und 2 setzen
   // löst jede Minute einen Alarm aus (55 Sekunden)
-  rtc.setAlarm1(DateTime(0, 0, 0, 0, 19, 30), DS3231_A1_Minute); 
+  rtc.setAlarm1(DateTime(0, 0, 0, 0, 03, 30), DS3231_A1_Minute); 
   // löst jede Minute aus
   rtc.setAlarm2(DateTime(0, 0, 0, 0, 0, 0), DS3231_A2_PerMinute);  
 
@@ -153,6 +138,7 @@ void loop() {
       rtc.clearAlarm(1);
       Serial.println("Alarm 1 ausgelöst über alarmFired Register");
       Serial.println();
+      connect_wifi();
       update_rtc_time();
     }
 
@@ -308,7 +294,7 @@ void show_time(const Word *words[], size_t wordCount) {
 // Set the RTC time to the NTP time
 void update_rtc_time() {
   // Set the date and time
-  timeClient.update();
+  while(!timeClient.forceUpdate()) {};
   unsigned long nowNTP = timeClient.getEpochTime();
   unsigned long nowRTC = rtc.now().unixtime();
 
@@ -329,4 +315,21 @@ void light_sleep() {
   wifi_fpm_do_sleep(FPM_SLEEP_MAX_TIME);
   delay(1000);
   Serial.println("Exit light sleep mode");
+}
+
+void connect_wifi() {
+   // Connecting to WiFi...
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Connecting to ");
+  Serial.print(WIFI_SSID);
+  // Loop continuously while WiFi is not connected
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  // Connected to WiFi
+  Serial.println();
+  Serial.print("Connected! IP address: ");
+  Serial.println(WiFi.localIP());
 }

@@ -37,4 +37,7 @@
 
 # vscode
 .vscode/
->>>>>>> dev
+
+# Project files
+*secrets.h
+tests/

@@ -31,31 +31,40 @@ This project is a "word clock" which shows the time in words by using a microcon
         ```
     - Next you can go to `Tools=>Boards=>Boards Manager` and under `ESP8266` you can chose `WeMos D1 R2 & mini` or what microcontroller you may have
 
+4. **WiFi Credentials**
+    - Change file name from `secrets_example.h`to `secrets.h`
+    - Add WiFi credentials to `secrets.h`
 
 ## Features
 
-TODO
+- Connects to WiFi and gets current time from ntp server
 
+### Planned features:
+
+The following features are planned ideas but may change or be canceled without any fixed timeline.
+- Add Buttons 
+    - for local configuration of time (lose WiFi dependency)
+    - change settings, like brightness and color
+- Support for light sensor and dynamic brightness
+- Support for DCF77 time signal reception
+- Add Server functionality and use WiFi as AP
+    - Add Desktop client for configuration
+    - Add Mobile client for configuration
+- ...
 
 ## Links
 
-TODO
-
-- Project homepage: https://muehlima.github.com/wortuhr/
 - Repository: https://github.com/muehlima/wortuhr/
 - Issue tracker: https://github.com/muehlima/wortuhr/issues
-  - In case of sensitive bugs like security vulnerabilities, please contact
-    my@email.com directly instead of using issue tracker. We value your effort
-    to improve the security and privacy of this project!
 
 ## Licensing
 
-TODO
+This project is licensed under the GNU General Public License v3.0 or later.
 
-
+See [COPYING](./COPYING) to see the full text.
 
 ## Contributors
 
 Michael Mühlemann
 
-Bern, 21.12.2024
+Bern, 27.12.2024

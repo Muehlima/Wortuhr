@@ -5,7 +5,7 @@ This project is a "word clock" which shows the time in words by using a microcon
 
 ## Used Hardware
 - WeMos D1 mini ESP8266 Board
-- RTC Module
+- RTC Module (D3231)
 - RGBW LED 30 LEDS/m (SK6812)
 
 ## Installing / Getting started

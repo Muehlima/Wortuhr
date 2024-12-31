@@ -17,12 +17,13 @@ This project is a "word clock" which shows the time in words by using a microcon
     ```
 
 2. **Install Dependencies**
-    - Install the CH340 Driver (https://www.wemos.cc/en/latest/ch340_driver.html)
+    - Install the CH340 Driver if you're not on Linux (https://www.wemos.cc/en/latest/ch340_driver.html) 
     
     Make sure you have the required libraries installed in your Arduino IDE:
     - Adafruit NeoPixel (https://github.com/adafruit/Adafruit_NeoPixel)
     - Adafruit RTClib (https://github.com/adafruit/RTClib)
     - Adafruit BusIO (https://github.com/adafruit/Adafruit_BusIO)
+    - NTPClient (https://github.com/arduino-libraries/NTPClient)
 
 3. **Add Microcontroller to Arduino IDE**
     - Add additional Boards under `File=>Preferences=>Additional Boards Manager` and add the following URL:
